@@ -1,0 +1,9 @@
+development:
+  doc_verification_api_username: abre_penalolen@abre
+  doc_verification_api_password: b0879b97f59e4b7539b5cb354186864d92e064f58b203587a4a8279c5be84d92584f7c6f8941087b6817310f80df252dcbcdaabe96eb4ad70e6769b68ac2938d
+
+test:
+  <<: *default
+
+production:
+  <<: *default
