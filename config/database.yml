@@ -4,12 +4,12 @@ default: &default
   timeout: 5000
   encoding: unicode
   host: db
+  username: postgres
+  password:
 
 development:
   <<: *default
   database: dev_doc_api_db
-  username: postgres
-  password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,9 +17,7 @@ development:
 test:
   <<: *default
   database: test_doc_api_db
-  username: doc_api_user
-  password: doc_api_user
 
 production:
-  username:
-  password:
+  <<: *default
+  database: prod_doc_api_db
