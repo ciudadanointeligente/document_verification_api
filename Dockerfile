@@ -26,7 +26,6 @@ WORKDIR $INSTALL_PATH
 # Copy in the application code from your work station at the current directory
 # over to the working directory.
 COPY . .
-RUN bundle install
 
 # Provide dummy data to Rails so it can pre-compile assets.
 # RUN RAILS_ENV=production rails assets:precompile
@@ -36,5 +35,23 @@ RUN bundle install
 # Expose a volume so that nginx will be able to read in assets in production.
 VOLUME ["$INSTALL_PATH/public"]
 
+# --- Add this to your Dockerfile ---
+ENV BUNDLE_GEMFILE=$INSTALL_PATH/Gemfile \
+  BUNDLE_JOBS=2 \
+  BUNDLE_PATH=/bundle
+
+# RUN bundle install
+
 # The default command that gets ran will be to start the Unicorn server.
-CMD bundle exec puma
+CMD  bundle check || bundle install \
+    && bundle exec rails db:drop \
+    && bundle exec rails db:create \
+    && bundle exec rails db:migrate \
+    && bundle exec rails db:seed \
+    && bundle exec rails server -b 0.0.0.0 -p 3000
+
+# The default command that gets ran will be to start the Unicorn server.
+#CMD RAILS_ENV=production bundle exec rails db:create \
+#    && RAILS_ENV=production bundle exec rails db:migrate \
+#    && RAILS_ENV=production bundle exec rails db:seed \
+#    && RAILS_ENV=production bundle exec puma
