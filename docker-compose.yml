@@ -1,27 +1,30 @@
-version: '2'
+version: '3'
 services:
   db:
     image: postgres:9.5
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD:
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
     ports:
-      - '5432:5432'
+      - "${POSTGRESQL_PORT}:5432"
     volumes:
       - ./docker/pg:/var/lib/postgresql/data
 
   app:
     build: .
+    environment:
+      - RAILS_PORT=${RAILS_PORT}
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
     depends_on:
       - db
     volumes:
-      - .:/app
     ports:
-      - '3000:3000'
-    env_file:
-      - .app.env
-    volumes_from:
-      - bundle
+      - "${RAILS_PORT}:3000"
+    volumes:
+      - ./docker/bundle:/bundle
+      - .:/app
+      - ./docker/lib/seeds:/document_verification_api/lib/seeds
 
   bundle:
     image: busybox
