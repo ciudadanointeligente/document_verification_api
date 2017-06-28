@@ -47,7 +47,6 @@ CMD  bundle install \
     && RAILS_ENV=$RAILS_ENV bundle exec rails db:drop \
     && RAILS_ENV=$RAILS_ENV bundle exec rails db:create \
     && RAILS_ENV=$RAILS_ENV bundle exec rails db:migrate \
-    && RAILS_ENV=$RAILS_ENV bundle exec rails db:seed \
     && RAILS_ENV=$RAILS_ENV bundle exec rails server -b 0.0.0.0 -p 3000
 
 # The default command that gets ran will be to start the Unicorn server.
