@@ -40,11 +40,11 @@ ENV BUNDLE_GEMFILE=$INSTALL_PATH/Gemfile \
   BUNDLE_JOBS=2 \
   BUNDLE_PATH=/bundle
 
-RUN bundle check || bundle install \
+RUN bundle install \
     && bundle exec rails db:drop \
     && bundle exec rails db:create \
     && bundle exec rails db:migrate \
-    && bundle exec rails db:seed 
+    && bundle exec rails db:seed
 
 # The default command that gets ran will be to start the Unicorn server.
 CMD  bundle exec rails server -b 0.0.0.0 -p 3000
