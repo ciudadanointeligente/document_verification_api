@@ -34,7 +34,7 @@ COPY . .
 
 # Expose a volume so that nginx will be able to read in assets in production.
 VOLUME ["$INSTALL_PATH/public"]
-VOLUME ["$INSTALL_PATH/lib/seeds]
+VOLUME ["$INSTALL_PATH/lib/seeds"]
 
 # --- Add this to your Dockerfile ---
 ENV BUNDLE_GEMFILE=$INSTALL_PATH/Gemfile \
