@@ -4,8 +4,8 @@ default: &default
   timeout: 5000
   encoding: unicode
   host: db
-  username: postgres
-  password:
+  username: <%= ENV['POSTGRESQL_USER'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
 
 development:
   <<: *default

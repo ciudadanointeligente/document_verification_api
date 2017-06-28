@@ -14,8 +14,8 @@ services:
     build: .
     environment:
       - RAILS_PORT=${RAILS_PORT}
-      - POSTGRES_USER=${POSTGRESQL_USER}
-      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
     depends_on:
       - db
     volumes:
