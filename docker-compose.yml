@@ -9,22 +9,34 @@ services:
       - "${POSTGRESQL_PORT}:5432"
     volumes:
       - ./docker/pg:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 500M
 
   app:
     build: .
+    command: bundle exec puma -C config/puma.rb
     environment:
       - RAILS_PORT=${RAILS_PORT}
+      - RAILS_ENV=${RAILS_ENV}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - POSTGRESQL_USER=${POSTGRESQL_USER}
       - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
     depends_on:
       - db
-    volumes:
     ports:
       - "${RAILS_PORT}:3000"
     volumes:
       - ./docker/bundle:/bundle
       - .:/app
       - ./docker/lib/seeds:/document_verification_api/lib/seeds
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 500M
 
   bundle:
     image: busybox

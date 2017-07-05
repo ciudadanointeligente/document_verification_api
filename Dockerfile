@@ -9,10 +9,13 @@ MAINTAINER Jordi Bari <jbari@ciudadanointeligente.org>
 # - postgresql-client-9.4: In case you want to talk directly to postgres
 RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client --fix-missing --no-install-recommends
 
+# Set an environment variable to store where the app is installed to inside
+# of the Docker image.
 ENV INSTALL_PATH /document_verification_api
-
 RUN mkdir -p $INSTALL_PATH
 
+# This sets the context of where commands will be ran in and is documented
+# on Docker's website extensively.
 WORKDIR $INSTALL_PATH
 
 COPY . .
@@ -32,4 +35,6 @@ ENV BUNDLE_GEMFILE=$INSTALL_PATH/Gemfile \
 #    && RAILS_ENV=$RAILS_ENV bundle exec rails db:migrate \
 #    && RAILS_ENV=$RAILS_ENV bundle exec rails db:seed \
 #    && RAILS_ENV=$RAILS_ENV bundle exec rails server -b 0.0.0.0 -p 3000
-CMD RAILS_ENV=$RAILS_ENV bundle exec rails server -b 0.0.0.0 -p 3000
+
+# CMD RAILS_ENV=$RAILS_ENV bundle exec rails server -b 0.0.0.0 -p 3000
+CMD RAILS_ENV=$RAILS_ENV bundle exec puma -C config/puma.rb

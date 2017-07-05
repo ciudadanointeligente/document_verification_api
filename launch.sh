@@ -19,6 +19,8 @@ export RAILS_PORT
 
 echo "starting document_verification_api"
 
+cd /home/abre/document_verification_api/docker-compose.yml
+
 docker-compose down
 docker-compose up -d
 
